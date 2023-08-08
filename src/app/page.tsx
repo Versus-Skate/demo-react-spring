@@ -8,6 +8,8 @@ import messengerAppIcon from './messenger.svg';
 import instagramAppIcon from './instagram.png';
 import { AppIcon } from './components/AppIcon';
 
+const START_AFTER = 2000;
+const INTERVAL = 1000000;
 
 export default function Home() {
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
@@ -29,12 +31,12 @@ export default function Home() {
       }
 
       const progress = timestamp - startTimestamp;
-      if (!hasStarted && progress > 2000) {
+      if (!hasStarted && progress > START_AFTER) {
         hasStarted = true;
         startTimestamp = timestamp;
         setIMessageItems(items => [...items, {content: 'Yo'}]);
         animationId = requestAnimationFrame(animate);
-      } else if (hasStarted && progress > 3000) {
+      } else if (hasStarted && progress > INTERVAL) {
         startTimestamp = timestamp;
         setIMessageItems(items => [...items, {content: 'Yo'}]);
         animationId = requestAnimationFrame(animate);
@@ -50,8 +52,8 @@ export default function Home() {
 
 
   return (
-    <main className="flex items-center justify-center min-h-screen">
-      <section className="flex w-[375px] h-[812px] bg-black p-4">
+    <main className="flex items-center justify-center h-screen">
+      <section className="flex w-full max-w-[375px] h-full max-h-[812px] bg-black p-4">
         <div className="flex self-end items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[40px]">
           <AppIcon
             src={imessageAppIcon}
