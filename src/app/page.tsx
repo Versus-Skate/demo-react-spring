@@ -61,7 +61,7 @@ export default function Home() {
     if (fadingItem) {
       setIMessageItems(_items);
       const {id, content, author} = IMessageFactory.create();
-      setIMessageFadingItems(items => [...items, <FadingText key={items.length + 1} text={content} />]);
+      setIMessageFadingItems(items => [...items, <FadingText key={items.length + 1} text={content} author={author} />]);
     }
   }
 
@@ -71,10 +71,10 @@ export default function Home() {
       <section className="flex w-full max-w-[375px] h-full max-h-[812px] bg-black p-4">
         <div className="flex self-end items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[40px]">
           <div className='relative'>
-            {iMessageFadingItems}
             <div
               onClick={handleOnClick}
             >
+              {iMessageFadingItems}
               <AppIcon
                 src={imessageAppIcon}
                 alt="iMessage App Icon"
