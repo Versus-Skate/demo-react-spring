@@ -73,7 +73,7 @@ export function Dot({ items }: { items: any[]}) {
       }}
     >
       <animated.span
-        className="absolute text-xs"
+        className="absolute text-xs select-none"
         style={{
           fontSize: spring.textSize,
         }}
