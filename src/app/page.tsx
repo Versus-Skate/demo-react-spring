@@ -11,8 +11,7 @@ import { animated, useSpring } from '@react-spring/web';
 import FadingText from './components/FadingText';
 import IMessageFactory from './data/iMessageItems';
 
-const START_AFTER = 2000;
-const INTERVAL = 1000 ;
+const getRandomSeconds = (minimumDelay: number) => Math.floor(Math.random() * minimumDelay) + minimumDelay;
 
 export default function Home() {
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
@@ -35,12 +34,12 @@ export default function Home() {
       }
 
       const progress = timestamp - startTimestamp;
-      if (!hasStarted && progress > START_AFTER) {
+      if (!hasStarted && progress > getRandomSeconds(1000)) {
         hasStarted = true;
         startTimestamp = timestamp;
         setIMessageItems(items => [...items, { content: 'Yo' }]);
         animationId = requestAnimationFrame(animate);
-      } else if (hasStarted && progress > INTERVAL) {
+      } else if (hasStarted && progress > getRandomSeconds(3000)) {
         startTimestamp = timestamp;
         setIMessageItems(items => [...items, { content: 'Yo' }]);
         animationId = requestAnimationFrame(animate);

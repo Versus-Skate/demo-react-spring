@@ -1,5 +1,8 @@
+import React from 'react';
+import Image from 'next/image';
 import { animated, easings, useSpring } from '@react-spring/web';
-import React, { useState } from 'react';
+
+import momAvatar from './mom-avatar.png';
 
 
 export default function FadingText({ text, author }: { text: string, author: string }) {
@@ -22,11 +25,28 @@ export default function FadingText({ text, author }: { text: string, author: str
   });
 
   return (
-    <animated.div 
-      className='absolute left-0 bg-[#0078FF] px-4 py-2 rounded-[20px] w-[260px] -mt-[100px]'
+    <animated.div
+      className={`
+        absolute flex
+        min-w-[260px] 
+        left-0 -mt-[100px]
+        bg-[#0078FF] 
+        px-4 py-2 rounded-[20px]
+      `}
       style={{ ...springProps }}
     >
-      {text}
+      <div className='absolute flex flex-col -left-12 top-0'>
+        <Image
+          src={momAvatar}
+          alt='Mom avatar'
+          className='aspect-square rounded-full'
+          width={48}
+          height={48}
+          layout='fixed'
+        />
+        <span className='text-center text-xs'>Mom</span>
+      </div>
+      <div>{text}</div>
     </animated.div>
   );
 };
