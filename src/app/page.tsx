@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image'
 
 import imessageAppIcon from './imessage.svg';
@@ -13,10 +13,17 @@ import MessengerFactory from './data/messengerItems';
 import InstagramFactory from './data/instagramItems';
 import ICalFactory from './data/iCalItems';
 import FadingElement from './components/FadingElement';
+import isMobile from 'is-mobile';
+
+import iPhoneSE from './iPhoneSE.png';
+
+// Should be an iPhone SE: 320 x 568
 
 const getRandomSeconds = (minimumDelay: number) => Math.floor(Math.random() * minimumDelay) + minimumDelay;
 
 export default function Home() {
+  const [_isMobile, set_IsMobile] = useState<boolean>(true);
+
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
   const [messengerItems, setMessengerItems] = useState<any[]>([]);
   const [instagramItems, setInstagramItems] = useState<any[]>([]);
@@ -27,6 +34,9 @@ export default function Home() {
   const [instagramFadingItems, setInstagramFadingItems] = useState<any[]>([]);
   const [iCalFadingItems, setICalFadingItems] = useState<any[]>([]);
 
+  useEffect(() => {
+    set_IsMobile(isMobile());
+  }, []);
 
   useLayoutEffect(() => {
     addItemAt('imessage');
@@ -134,8 +144,17 @@ export default function Home() {
 
   return (
     <main className="flex items-center justify-center h-screen">
-      <section className="flex w-full max-w-[375px] h-full max-h-[812px] bg-black p-4">
-        <div className="flex self-end items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[40px]">
+      {!_isMobile && (
+        <Image
+          src={iPhoneSE}
+          alt={'iPhone SE'}
+          layout='fixed'
+          className='absolute z-0'
+        />
+        )
+      }
+      <section className="flex w-[320px] h-[568px] p-2">
+        <div className="flex self-end items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[32px] z-10">
           <div className='relative'>
             <div
               onClick={() => handleOnClick('imessage')}
