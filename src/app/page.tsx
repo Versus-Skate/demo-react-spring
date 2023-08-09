@@ -6,24 +6,35 @@ import Image from 'next/image'
 import imessageAppIcon from './imessage.svg';
 import messengerAppIcon from './messenger.svg';
 import instagramAppIcon from './instagram.png';
+import icalAppIcon from './ical.svg';
 import { AppIcon } from './components/AppIcon';
 import { animated, useSpring } from '@react-spring/web';
-import FadingText from './components/FadingText';
+import FadingText from './components/FadingElement';
 import IMessageFactory from './data/iMessageItems';
 import MessengerFactory from './data/messengerItems';
+import InstagramFactory from './data/instagramItems';
+import ICalFactory from './data/iCalItems';
+import FadingElement from './components/FadingElement';
 
 const getRandomSeconds = (minimumDelay: number) => Math.floor(Math.random() * minimumDelay) + minimumDelay;
 
 export default function Home() {
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
-  const [iMessageFadingItems, setIMessageFadingItems] = useState<any[]>([]);
   const [messengerItems, setMessengerItems] = useState<any[]>([]);
+  const [instagramItems, setInstagramItems] = useState<any[]>([]);
+  const [iCalItems, setICalItems] = useState<any[]>([]);
+
+  const [iMessageFadingItems, setIMessageFadingItems] = useState<any[]>([]);
   const [messengerFadingItems, setMessengerFadingItems] = useState<any[]>([]);
+  const [instagramFadingItems, setInstagramFadingItems] = useState<any[]>([]);
+  const [iCalFadingItems, setICalFadingItems] = useState<any[]>([]);
 
 
   useLayoutEffect(() => {
     addItemAt('imessage');
     addItemAt('messenger');
+    // addItemAt('instagram');
+    addItemAt('ical');
   }, []);
 
   const updateItemList = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
@@ -38,6 +49,14 @@ export default function Home() {
         console.log(JSON.stringify(newItem, null, 2));
         setMessengerItems(items => [...items, newItem]);
         break;
+      case 'instagram':
+        newItem = InstagramFactory.create();
+        setInstagramItems(items => [...items, newItem]);
+        break;
+      case 'ical':
+        newItem = ICalFactory.create();
+        setICalItems(items => [...items, newItem]);
+        break;
     }
 
   }
@@ -51,7 +70,7 @@ export default function Home() {
         fadingItem = _items.pop();
         if (fadingItem) {
           setIMessageItems(_items);
-          setIMessageFadingItems(items => [...items, <FadingText type='imessage' key={type + items.length} text={fadingItem.content} author={fadingItem.author} />]);
+          setIMessageFadingItems(items => [...items, <FadingElement type='imessage' key={type + items.length} item={fadingItem} />]);
         }
         break;
       case 'messenger':
@@ -59,9 +78,24 @@ export default function Home() {
         fadingItem = _items.pop();
         if (fadingItem) {
           setMessengerItems(_items);
-          setMessengerFadingItems(items => [...items, <FadingText type='messenger' key={type + items.length} text={fadingItem.content} author={fadingItem.author} />]);
+          setMessengerFadingItems(items => [...items, <FadingElement type='messenger' key={type + items.length} item={fadingItem} />]);
         }
         break;
+      case 'instagram':
+        _items = [...instagramItems];
+        fadingItem = _items.pop();
+        if (fadingItem) {
+          setInstagramItems(_items);
+          setInstagramFadingItems(items => [...items, <FadingElement type='instagram' key={type + items.length} item={fadingItem} />]);
+        }
+        break;
+      case 'ical':
+        _items = [...iCalItems];
+        fadingItem = _items.pop();
+        if (fadingItem) {
+          setICalItems(_items);
+          setICalFadingItems(items => [...items, <FadingElement type='ical' key={type + items.length} item={fadingItem} />]);
+        }
     }
   }
 
@@ -118,7 +152,6 @@ export default function Home() {
             </div>
           </div>
           <div className='relative'>
-
             <div
               onClick={() => handleOnClick('messenger')}
             >
@@ -130,10 +163,30 @@ export default function Home() {
               />
             </div>
           </div>
-          <AppIcon
-            src={instagramAppIcon}
-            alt="Instagram App Icon"
-          />
+          <div className='relative'>
+            <div
+              onClick={() => handleOnClick('instagram')}
+            >
+              {instagramFadingItems}
+              <AppIcon
+                src={instagramAppIcon}
+                alt="Instagram App Icon"
+                items={instagramItems}
+              />
+            </div>
+          </div>
+          <div className='relative'>
+            <div
+              onClick={() => handleOnClick('ical')}
+            >
+              {iCalFadingItems}
+              <AppIcon
+                src={icalAppIcon}
+                alt="iCal App Icon"
+                items={iCalItems}
+              />
+            </div>
+          </div>
         </div>
       </section>
     </main>

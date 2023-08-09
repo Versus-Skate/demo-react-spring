@@ -1,11 +1,20 @@
-import React from 'react';
-import Image from 'next/image';
-import { animated, easings, useSpring } from '@react-spring/web';
+import Image from "next/image";
 
 import momAvatar from './mom-avatar.jpg';
 import jonasAvatar from './jonas-avatar.jpg';
 import mahdiAvatar from './mahdi-avatar.jpg';
 import magnusAvatar from './magnus-avatar.jpg';
+
+
+const getBg = (type: 'messenger' | 'imessage') => {
+  switch (type) {
+    case 'imessage':
+      return 'bg-[#ebebeb]';
+    case 'messenger':
+      return 'bg-[#0084ff]';
+  }
+
+}
 
 const getAvatar = (name: string) => {
   switch (name) {
@@ -20,63 +29,23 @@ const getAvatar = (name: string) => {
   }
 }
 
-const getBg = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
-  switch (type) {
-    case 'imessage':
-      return 'bg-[#ebebeb]';
-    case 'messenger':
-      return 'bg-[#0084ff]';
-    case 'instagram':
-      return 'bg-[#fff]';
-    case 'ical':
-      return 'bg-[#fff]';
-  }
 
-}
-
-const getTextColor = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
+const getTextColor = (type: 'messenger' | 'imessage') => {
   switch (type) {
     case 'imessage':
       return 'text-[#272727]';
     case 'messenger':
       return 'text-[#fff]';
-    case 'instagram':
-      return 'text-[#272727]';
-    case 'ical':
-      return 'text-[#272727]';
   }
 }
 
-
-export default function FadingText({ type, text, author }: { type: 'messenger' | 'imessage' | 'instagram' | 'ical', text: string, author: any }) {
-
-  const springProps = useSpring({
-    from: {
-      textSize: 0,
-      top: 0,
-      opacity: 1,
-    },
-    to: [{
-      textSize: 12,
-      top: -812 + 60 + 16,
-      opacity: 0,
-    }],
-    config: {
-      easing: easings.easeInCirc,
-      duration: 3000,
-    },
-  });
-
+export default function FadingText({ author, type, text }: { author: any, type: 'messenger' | 'imessage', text: string }) {
   return (
-    <animated.div
+    <div
       className={`
-        absolute flex
-        min-w-[260px] 
-        -mt-[100px]
         ${getBg(type)}
         px-4 py-2 rounded-[20px]
       `}
-      style={{ ...springProps }}
     >
       <div className='absolute flex flex-col -left-10 top-1'>
         <Image
@@ -90,13 +59,13 @@ export default function FadingText({ type, text, author }: { type: 'messenger' |
         />
         <span className='text-center text-xs text-white/60'>{author.name}</span>
       </div>
-      <div 
+      <div
         className={`
-          ${ getTextColor(type) }
+          ${getTextColor(type)}
         `}
       >
         {text}
       </div>
-    </animated.div>
+    </div>
   );
-};
+}
