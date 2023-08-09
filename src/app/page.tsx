@@ -26,6 +26,7 @@ export default function Home() {
   const [_isMobile, set_IsMobile] = useState<boolean>(false);
   const [windowWidth, setWindowWidth] = useState<number>(320);
   const [windowHeight, setWindowHeight] = useState<number>(568);
+  const [orientation, setOrientation] = useState<OrientationType>();
 
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
   const [messengerItems, setMessengerItems] = useState<any[]>([]);
@@ -36,6 +37,26 @@ export default function Home() {
   const [messengerFadingItems, setMessengerFadingItems] = useState<any[]>([]);
   const [instagramFadingItems, setInstagramFadingItems] = useState<any[]>([]);
   const [iCalFadingItems, setICalFadingItems] = useState<any[]>([]);
+
+  
+  useEffect(() => {
+    const orientation = window.screen.orientation || Math.abs(window.orientation) === 90 ? { type: 'landscape-primary' } : { type: 'portrait' };
+    setOrientation(orientation.type as OrientationType);
+  }, []);
+
+  useEffect(() => {
+    const handleOrientationChange = () => {
+      const orientation = window.screen.orientation || Math.abs(window.orientation) === 90 ? { type: 'landscape-primary' } : { type: 'portrait' };
+      setOrientation(orientation.type as OrientationType);
+    };
+
+    window.addEventListener("orientationchange", handleOrientationChange);
+
+    return () => {
+      window.removeEventListener("orientationchange", handleOrientationChange);
+    }
+
+  }, []);
 
   useEffect(() => {
     // TODO: have a loader until then
@@ -150,14 +171,27 @@ export default function Home() {
     updateFadingItems(type)
   }
 
+  if (_isMobile && ['landscape-primary', 'landscape-secondary'].indexOf(orientation as string) !== -1) {
+    return (
+      <main
+        className="flex flex-col justify-center items-center"
+      >
+        <div className="flex-grow text-white text-2xl mt-8">
+          <p>Please rotate your device to portrait mode.</p>
+        </div>
+      </main>
+    )
+  }
+
 
   return (
-    <main 
+    <main
       className="flex items-center flex-col justify-center"
       style={{
-        minHeight: !_isMobile ? '100vh': undefined,
+        minHeight: !_isMobile ? '100vh' : undefined,
       }}
     >
+
       {!_isMobile && (
         <Image
           src={iPhoneSE}
@@ -179,8 +213,8 @@ export default function Home() {
           py-4
         `}
         style={{
-          width: windowWidth,
-          height: windowHeight,
+          width: _isMobile ? windowWidth: 320,
+          height: _isMobile ? windowHeight: 568,
         }}
       >
         <Image
