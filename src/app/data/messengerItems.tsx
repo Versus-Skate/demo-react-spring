@@ -12,7 +12,6 @@ export default class MessengerFactory {
   static create() {
     const randomIndex = Math.floor(Math.random() * data.length);
     const { id, content, author } = data[randomIndex];
-    console.log(JSON.stringify(data[randomIndex], null, 2));
     return new MessengerFactory(id, content, author);
   }
 }

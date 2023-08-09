@@ -8,8 +8,6 @@ import messengerAppIcon from './messenger.svg';
 import instagramAppIcon from './instagram.png';
 import icalAppIcon from './ical.svg';
 import { AppIcon } from './components/AppIcon';
-import { animated, useSpring } from '@react-spring/web';
-import FadingText from './components/FadingElement';
 import IMessageFactory from './data/iMessageItems';
 import MessengerFactory from './data/messengerItems';
 import InstagramFactory from './data/instagramItems';
@@ -46,7 +44,6 @@ export default function Home() {
         break;
       case 'messenger':
         newItem = MessengerFactory.create();
-        console.log(JSON.stringify(newItem, null, 2));
         setMessengerItems(items => [...items, newItem]);
         break;
       case 'instagram':
