@@ -1,8 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 import { animated, easings, useSpring } from '@react-spring/web';
 import FadingText from './FadingText';
 import FadingCalDay from './FadingCalDay';
+import FadingInstagramPost from './FadingInstagramPost';
 
 
 export default function FadingElement({ type, item }: { type: 'messenger' | 'imessage' | 'instagram' | 'ical', item: any }) {
@@ -36,11 +36,10 @@ export default function FadingElement({ type, item }: { type: 'messenger' | 'ime
       {['imessage', 'messenger'].indexOf(type) !== -1 ? (
         <FadingText author={item.author} type={type as 'messenger' | 'imessage'} text={item.content} />
       ) : (type === 'ical') ? (
-        <FadingCalDay text={item.content} type={type} datetime={item.datetime} />
-      ) : (
-        <div></div>
-      )}
-
+        <FadingCalDay text={item.content} datetime={item.datetime} />
+      ) : (type === 'instagram') ? (
+        <FadingInstagramPost text={item.content} datetime={item.datetime} author={item.author} imgUrl={item.imgUrl} />
+      ): <></>}
     </animated.div>
   );
 };

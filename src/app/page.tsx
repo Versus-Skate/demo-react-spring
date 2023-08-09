@@ -33,7 +33,7 @@ export default function Home() {
   useLayoutEffect(() => {
     addItemAt('imessage');
     addItemAt('messenger');
-    // addItemAt('instagram');
+    addItemAt('instagram');
     addItemAt('ical');
   }, []);
 
