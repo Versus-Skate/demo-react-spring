@@ -16,6 +16,7 @@ import FadingElement from './components/FadingElement';
 import isMobile from 'is-mobile';
 
 import iPhoneSE from './iPhoneSE.png';
+import homescreen from './homescreen.jpg';
 
 // Should be an iPhone SE: 320 x 568
 
@@ -153,6 +154,13 @@ export default function Home() {
         />
         )
       }
+      <Image
+          src={homescreen}
+          alt={'Homescreen'}
+          layout='fixed'
+          className='absolute z-0'
+        />
+
       <section className="flex w-[320px] h-[568px] p-2">
         <div className="flex self-end items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[32px] z-10">
           <div className='relative'>
