@@ -1,7 +1,7 @@
 "use client";
 
 import { useSpring, animated, useSpringRef, easings, useChain } from "@react-spring/web"
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import { useEffect } from "react";
 
 const DOT_BASE_WIDTH = 24;
@@ -39,7 +39,7 @@ const to = () => {
     }]
 }
 
-export function AppIcon({ src, alt, items = [] }: { src: string, alt: string, items?: { content: string }[] }) {
+export function AppIcon({ src, alt, items = [] }: { src: string | StaticImageData, alt: string, items?: { content: string }[] }) {
   const dotSpringApi = useSpringRef();
   const [spring] = useSpring(() => ({
     from: fromNone(),
