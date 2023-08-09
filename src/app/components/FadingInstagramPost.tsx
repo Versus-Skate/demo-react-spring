@@ -1,3 +1,4 @@
+import { animated, useSpring } from "@react-spring/web";
 import Image from "next/image";
 
 function formatUnixTimestamp(timestamp: number): string {
@@ -14,24 +15,44 @@ function formatUnixTimestamp(timestamp: number): string {
 }
 
 export default function FadingInstagramPost({ datetime, text, author, imgUrl }: { datetime: any, text: string, author: any, imgUrl: string }) {
+  const [spring, api] = useSpring(() => ({
+    from: {
+      opacity: 0,
+      scale: 0,
+    },
+    to: [{
+      opacity: 1,
+      scale: 1.02,
+    }, {
+      scale: 1,
+    }],
+    config: {
+      duration: 100,
+    }
+  }));
+
   return (
-    <div className={
-      `
+    <animated.div
+      className={
+        `
         absolute
-        -left-[42px]
         -top-[36px]
         pr-4 pl-2 py-2 rounded-[10px]
       `
-    }>
-      <Image 
-        src={imgUrl} 
+      }
+      style={{
+        ...spring,
+      }}
+    >
+      <Image
+        src={imgUrl}
         alt={text}
         width={120}
         height={120}
         objectFit="cover"
         className="rounded-[10px]"
       />
-      
-    </div>
+
+    </animated.div>
   );
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { useSpring, animated, easings } from "@react-spring/web";
 import momAvatar from './mom-avatar.jpg';
 import jonasAvatar from './jonas-avatar.jpg';
 import mahdiAvatar from './mahdi-avatar.jpg';
@@ -40,12 +41,29 @@ const getTextColor = (type: 'messenger' | 'imessage') => {
 }
 
 export default function FadingText({ author, type, text }: { author: any, type: 'messenger' | 'imessage', text: string }) {
+  const [spring, api] = useSpring(() => ({
+    from: {
+      opacity: 0,
+      scale: 0,
+    },
+    to: [{
+      opacity: 1,
+      scale: 1.02,
+    }, {
+      scale: 1,
+    }],
+    config: {
+      duration: 100,
+    }
+  }));
+
   return (
-    <div
+    <animated.div
       className={`
         ${getBg(type)}
         px-4 py-2 rounded-[20px]
       `}
+      style={spring}
     >
       <div className='absolute flex flex-col -left-10 top-1'>
         <Image
@@ -66,6 +84,6 @@ export default function FadingText({ author, type, text }: { author: any, type: 
       >
         {text}
       </div>
-    </div>
+    </animated.div>
   );
 }
