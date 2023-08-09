@@ -35,10 +35,8 @@ export default function FadingInstagramPost({ datetime, text, author, imgUrl }: 
     <animated.div
       className={
         `
-        absolute
-        -top-[36px]
-        pr-4 pl-2 py-2 rounded-[10px]
-      `
+          pr-4 pl-2 py-2 rounded-[10px]
+        `
       }
       style={{
         ...spring,

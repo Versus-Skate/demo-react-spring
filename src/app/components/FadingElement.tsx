@@ -28,7 +28,6 @@ export default function FadingElement({ type, item }: { type: 'messenger' | 'ime
     <animated.div
       className={`
         absolute flex
-        min-w-[260px] 
         -mt-[100px]
       `}
       style={{ ...springProps }}

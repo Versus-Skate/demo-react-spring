@@ -153,7 +153,7 @@ export default function Home() {
         startTimestamp = timestamp;
         updateItemList(type);
         animationId = requestAnimationFrame(animate);
-      } else if (hasStarted && progress > getRandomSeconds(3000)) {
+      } else if (hasStarted && progress > getRandomSeconds(300000)) {
         startTimestamp = timestamp;
         updateItemList(type);
         animationId = requestAnimationFrame(animate);
@@ -225,8 +225,15 @@ export default function Home() {
           className='absolute z-0'
         />
 
-        <div className="flex items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[32px] z-10">
-          <div className='relative'>
+        <div 
+          className={`
+            flex items-center justify-evenly 
+            relative
+            w-full h-[94px] 
+            bg-white/20 rounded-[32px] z-10
+          `}
+        >
+          <div>
             <div
               onClick={() => handleOnClick('imessage')}
               className='select-none touch-none'
@@ -239,7 +246,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className='relative'>
+          <div>
             <div
               onClick={() => handleOnClick('messenger')}
               className='select-none touch-none'
@@ -252,7 +259,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className='relative'>
+          <div>
             <div
               onClick={() => handleOnClick('instagram')}
               className='select-none touch-none'
@@ -265,7 +272,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className='relative'>
+          <div>
             <div
               className='select-none touch-none'
               onClick={() => handleOnClick('ical')}

@@ -30,24 +30,29 @@ export default function FadingCalDay({ datetime, text }: { datetime: any, text: 
     }
   }));
 
+  const computeRight = () => {
+    const width = text.length * 8 + formatUnixTimestamp(datetime).length * 4;
+    return width / 2;
+  }
+
   return (
     <animated.div className={
       `
-        absolute
-        -left-[120px]
         bg-[#FEF7EC]
         pr-4 pl-2 py-2 rounded-[10px]
+        relative
       `
     } style={{
       ...spring,
+      right: computeRight(),
     }}>
       <div className="border-l-4 border-[#F3B855] pl-2">
       <div
-        className={`text-[#72531D]`}
+        className={`text-[#72531D] whitespace-nowrap`}
       >
         {text}
       </div>
-      <div className="text-[#B79E70]">
+      <div className="text-[#B79E70] whitespace-nowrap text-xs">
         {formatUnixTimestamp(datetime)}
       </div>
       </div>
