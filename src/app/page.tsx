@@ -15,7 +15,7 @@ import ICalFactory from './data/iCalItems';
 import FadingElement from './components/FadingElement';
 import isMobile from 'is-mobile';
 
-import iPhoneSE from './iPhoneSE.png';
+import iPhoneSE from './iphone-se.png';
 import homescreen from './homescreen-@2x.jpg';
 
 // Should be an iPhone SE: 320 x 568
