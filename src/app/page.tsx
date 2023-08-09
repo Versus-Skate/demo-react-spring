@@ -38,15 +38,12 @@ export default function Home() {
   const [instagramFadingItems, setInstagramFadingItems] = useState<any[]>([]);
   const [iCalFadingItems, setICalFadingItems] = useState<any[]>([]);
 
-  
-  useEffect(() => {
-    const orientation = window.screen.orientation || Math.abs(window.orientation) === 90 ? { type: 'landscape-primary' } : { type: 'portrait' };
-    setOrientation(orientation.type as OrientationType);
-  }, []);
+
 
   useEffect(() => {
     const handleOrientationChange = () => {
       const orientation = window.screen.orientation || Math.abs(window.orientation) === 90 ? { type: 'landscape-primary' } : { type: 'portrait' };
+      console.log(orientation)
       setOrientation(orientation.type as OrientationType);
     };
 
@@ -56,6 +53,17 @@ export default function Home() {
       window.removeEventListener("orientationchange", handleOrientationChange);
     }
 
+  }, []);
+
+  useLayoutEffect(() => {
+    let orientation: OrientationType;
+    if (window.screen.orientation) {
+      orientation = window.screen.orientation.type as OrientationType;
+    } else {
+      orientation = Math.abs(window.orientation) === 90 ? 'landscape-primary' : 'portrait' as OrientationType;
+    }
+    
+    setOrientation(orientation);
   }, []);
 
   useEffect(() => {
