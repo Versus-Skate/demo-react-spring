@@ -223,6 +223,7 @@ export default function Home() {
         style={{
           width: _isMobile ? windowWidth: 320,
           height: _isMobile ? windowHeight: 568,
+          overflowX: _isMobile ? 'hidden' : 'visible',
         }}
       >
         <Image
