@@ -40,6 +40,8 @@ export function AppIcon({ src, alt, items = [] }: { src: string | StaticImageDat
     <animated.div 
       onMouseDown={handleOnMouseDown}
       onMouseUp={handleOnMouseUp}
+      onTouchStart={handleOnMouseDown}
+      onTouchEnd={handleOnMouseUp}
       style={spring}
       className='relative'
     >

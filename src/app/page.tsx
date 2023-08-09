@@ -158,6 +158,7 @@ export default function Home() {
           <div className='relative'>
             <div
               onClick={() => handleOnClick('imessage')}
+              className='select-none touch-none'
             >
               {iMessageFadingItems}
               <AppIcon
@@ -170,6 +171,7 @@ export default function Home() {
           <div className='relative'>
             <div
               onClick={() => handleOnClick('messenger')}
+              className='select-none touch-none'
             >
               {messengerFadingItems}
               <AppIcon
@@ -182,6 +184,7 @@ export default function Home() {
           <div className='relative'>
             <div
               onClick={() => handleOnClick('instagram')}
+              className='select-none touch-none'
             >
               {instagramFadingItems}
               <AppIcon
@@ -193,6 +196,7 @@ export default function Home() {
           </div>
           <div className='relative'>
             <div
+              className='select-none touch-none'
               onClick={() => handleOnClick('ical')}
             >
               {iCalFadingItems}
