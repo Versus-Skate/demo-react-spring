@@ -15,6 +15,8 @@ export default function FadingCalDay({ datetime, type, text }: { datetime: any, 
   return (
     <div className={
       `
+        absolute
+        -left-[120px]
         bg-[#FEF7EC]
         pr-4 pl-2 py-2 rounded-[10px]
       `
