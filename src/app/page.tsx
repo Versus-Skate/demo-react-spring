@@ -16,14 +16,16 @@ import FadingElement from './components/FadingElement';
 import isMobile from 'is-mobile';
 
 import iPhoneSE from './iPhoneSE.png';
-import homescreen from './homescreen.jpg';
+import homescreen from './homescreen-@2x.jpg';
 
 // Should be an iPhone SE: 320 x 568
 
 const getRandomSeconds = (minimumDelay: number) => Math.floor(Math.random() * minimumDelay) + minimumDelay;
 
 export default function Home() {
-  const [_isMobile, set_IsMobile] = useState<boolean>(true);
+  const [_isMobile, set_IsMobile] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(320);
+  const [windowHeight, setWindowHeight] = useState<number>(568);
 
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
   const [messengerItems, setMessengerItems] = useState<any[]>([]);
@@ -36,7 +38,13 @@ export default function Home() {
   const [iCalFadingItems, setICalFadingItems] = useState<any[]>([]);
 
   useEffect(() => {
-    set_IsMobile(isMobile());
+    // TODO: have a loader until then
+    const __isMobile = isMobile();
+    set_IsMobile(__isMobile);
+    if (__isMobile) {
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    }
   }, []);
 
   useLayoutEffect(() => {
@@ -144,7 +152,12 @@ export default function Home() {
 
 
   return (
-    <main className="flex items-center justify-center h-screen">
+    <main 
+      className="flex items-center flex-col justify-center"
+      style={{
+        minHeight: !_isMobile ? '100vh': undefined,
+      }}
+    >
       {!_isMobile && (
         <Image
           src={iPhoneSE}
@@ -152,17 +165,33 @@ export default function Home() {
           layout='fixed'
           className='absolute z-0'
         />
-        )
+      )
       }
-      <Image
+
+      <div // Inner Container - must have a fixed size
+        className={`
+          relative
+          w-[320px] h-[568px]
+          flex
+          flex-col
+          justify-end
+          px-2
+          py-4
+        `}
+        style={{
+          width: windowWidth,
+          height: windowHeight,
+        }}
+      >
+        <Image
           src={homescreen}
           alt={'Homescreen'}
-          layout='fixed'
+          layout='fill'
+          objectFit='cover'
           className='absolute z-0'
         />
 
-      <section className="flex w-[320px] h-[568px] p-2">
-        <div className="flex self-end items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[32px] z-10">
+        <div className="flex items-center justify-evenly w-full h-[94px] bg-white/20 rounded-[32px] z-10">
           <div className='relative'>
             <div
               onClick={() => handleOnClick('imessage')}
@@ -216,7 +245,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </main>
   )
 }
