@@ -57,14 +57,16 @@ export function AppIcon({ src, alt, items = [] }: { src: string | StaticImageDat
     }));
   }, [dotSpringApi, items]);
 
-
   return (
-    <div className='relative'>
-      <div className={`
-        absolute w-6 h-6 
-        flex items-center justify-center
-        -right-3 -top-3
-      `}
+    <div 
+      className='relative'
+    >
+      <div 
+        className={`
+          absolute w-6 h-6 
+          flex items-center justify-center
+          -right-3 -top-3
+        `}
       > {/* we need a fixed container to get the animation growing from center */}
         <animated.div
           className={`
