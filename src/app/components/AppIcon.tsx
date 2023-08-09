@@ -90,7 +90,8 @@ export function AppIcon({ src, alt, items = [] }: { src: string | StaticImageDat
       <Image
         src={src}
         alt={alt}
-        layout='contained'
+        width={60}
+        height={60}
       />
     </div>
   )
