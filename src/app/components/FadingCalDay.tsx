@@ -53,7 +53,11 @@ export default function FadingCalDay({ datetime, text }: { datetime: any, text: 
     }}>
       <div className={`flex`}
       >
-        <div className="w-1 rounded-full bg-blue-500 mr-2" />
+        <div className="w-1 rounded-full mr-2" 
+          style={{
+            backgroundColor: getBorderColor(color),
+          }}
+        />
         <div>
           <div
             className={`whitespace-nowrap`}
