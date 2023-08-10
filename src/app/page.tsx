@@ -116,8 +116,8 @@ export default function Home() {
         const progress = timestamp - prevTimestamp; // gives normalized progress
         if (progress > nextAnimationIn) {
           updateItemList(type);
-          nextAnimationIn = _getDelay(counter[type], type);
           counter[type] += 1;
+          nextAnimationIn = _getDelay(counter[type], type);
           animationId = requestAnimationFrame(animate);
         } else {
           animationId = requestAnimationFrame(animate);
