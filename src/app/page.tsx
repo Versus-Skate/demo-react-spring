@@ -17,16 +17,18 @@ import isMobile from 'is-mobile';
 
 import iPhoneSE from './iphone-se.png';
 import homescreen from './homescreen-@2x.jpg';
+import { animated, easings, useSpring, useTransition } from '@react-spring/web';
 
 // Should be an iPhone SE: 320 x 568
 
 const getRandomSeconds = (minimumDelay: number) => Math.floor(Math.random() * minimumDelay) + minimumDelay;
 
 export default function Home() {
-  const [_isMobile, set_IsMobile] = useState<boolean>(false);
+  const [_isMobile, set_IsMobile] = useState<boolean>(true);
   const [windowWidth, setWindowWidth] = useState<number>(320);
   const [windowHeight, setWindowHeight] = useState<number>(568);
   const [orientation, setOrientation] = useState<OrientationType>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [iMessageItems, setIMessageItems] = useState<any[]>([]);
   const [messengerItems, setMessengerItems] = useState<any[]>([]);
@@ -38,6 +40,17 @@ export default function Home() {
   const [instagramFadingItems, setInstagramFadingItems] = useState<any[]>([]);
   const [iCalFadingItems, setICalFadingItems] = useState<any[]>([]);
 
+  const [springHomescreen] = useSpring(() => ({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    config: {
+      duration: 2000,
+    },
+  }));
 
 
   useEffect(() => {
@@ -62,12 +75,11 @@ export default function Home() {
     } else {
       orientation = Math.abs(window.orientation) === 90 ? 'landscape-primary' : 'portrait' as OrientationType;
     }
-    
+
     setOrientation(orientation);
   }, []);
 
   useEffect(() => {
-    // TODO: have a loader until then
     const __isMobile = isMobile();
     set_IsMobile(__isMobile);
     if (__isMobile) {
@@ -75,6 +87,15 @@ export default function Home() {
       setWindowHeight(window.innerHeight);
     }
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [_isMobile]);
 
   useLayoutEffect(() => {
     addItemAt('imessage');
@@ -179,12 +200,54 @@ export default function Home() {
     updateFadingItems(type)
   }
 
+  if (isLoading) {
+    return (
+      <main
+        className="flex items-center flex-col justify-center"
+        style={{
+          minHeight: '100vh',
+        }}
+      >
+        {!_isMobile && (
+          <Image
+            src={iPhoneSE}
+            alt={'iPhone SE'}
+            layout='fixed'
+            className='absolute z-0'
+          />
+        )}
+        <div // Inner Container - must have a fixed size
+          className={`
+          relative
+          w-[320px] h-[568px]
+          flex
+          flex-col
+          justify-center
+          items-center
+          px-2
+          py-4
+        `}
+          style={{
+            width: _isMobile ? windowWidth : 320,
+            height: _isMobile ? windowHeight : 568,
+            overflowX: _isMobile ? 'hidden' : 'visible',
+          }}
+        >
+          <div className="text-white text-6xl z-30">
+            <p></p>
+          </div>
+        </div>
+
+      </main>
+    )
+  }
+
   if (_isMobile && ['landscape-primary', 'landscape-secondary'].indexOf(orientation as string) !== -1) {
     return (
       <main
         className="flex flex-col justify-center items-center"
       >
-        <div className="flex-grow text-white text-2xl mt-8">
+        <div className="flex flex-grow text-white text-2xl mt-8">
           <p>Please rotate your device to portrait mode.</p>
         </div>
       </main>
@@ -210,7 +273,7 @@ export default function Home() {
       )
       }
 
-      <div // Inner Container - must have a fixed size
+      <animated.div // Inner Container - must have a fixed size
         className={`
           relative
           w-[320px] h-[568px]
@@ -221,9 +284,10 @@ export default function Home() {
           py-4
         `}
         style={{
-          width: _isMobile ? windowWidth: 320,
-          height: _isMobile ? windowHeight: 568,
+          width: _isMobile ? windowWidth : 320,
+          height: _isMobile ? windowHeight : 568,
           overflowX: _isMobile ? 'hidden' : 'visible',
+          ...springHomescreen
         }}
       >
         <Image
@@ -232,9 +296,10 @@ export default function Home() {
           layout='fill'
           objectFit='cover'
           className='absolute z-0'
+
         />
 
-        <div 
+        <div
           className={`
             flex items-center justify-evenly 
             relative
@@ -295,7 +360,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </animated.div>
     </main>
   )
 }
