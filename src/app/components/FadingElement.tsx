@@ -37,7 +37,7 @@ export default function FadingElement({ type, item }: { type: 'messenger' | 'ime
       ) : (type === 'ical') ? (
         <FadingCalDay text={item.content} datetime={item.datetime} />
       ) : (type === 'instagram') ? (
-        <FadingInstagramPost id={item.id} />
+        <FadingInstagramPost id={item.id} imgUrl={item.imgUrl} placeholderUrl={item.placeholderUrl} />
       ): <></>}
     </animated.div>
   );
