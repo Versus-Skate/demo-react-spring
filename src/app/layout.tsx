@@ -20,7 +20,7 @@ export default function RootLayout({
       <meta property="og:video:secure_url" content="/isak-phone-withtouch-1080.mp4" />
       <meta property="og:video" content="/isak-phone-withtouch-1080.mp4" />
       <meta property="og:video:type" content="video/mp4" />
-      <meta property="og:title" content="Isak\'s iPhone" />
+      <meta property="og:title" content="Isak's iPhone" />
       <meta property="og:description" content='You have one unread message from Magnus' />
       <meta property="og:video:width" content="400" />
       <meta property="og:video:height" content="400" />
@@ -33,7 +33,7 @@ export default function RootLayout({
       <meta property="og:image:height" content="/og.jpg" />
 
       <meta name="twitter:card" content="player" />
-      <meta name="twitter:title" content="Isak\'s iPhone" />
+      <meta name="twitter:title" content="Isak's iPhone" />
       <meta property="twitter:site" content="@ben_cotte" />
       <meta name="twitter:description" content="You have one unread message from Magnus" />
       <meta name="twitter:player" content="https://demo-react-spring.vercel.app/isak-phone-withtouch-1080.mp4" />
