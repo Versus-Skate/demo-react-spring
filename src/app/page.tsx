@@ -5,7 +5,9 @@ import Image from 'next/image'
 
 import imessageAppIcon from './imessage.svg';
 import messengerAppIcon from './messenger.svg';
+import spotifyAppIcon from './spotify.png';
 import instagramAppIcon from './instagram.png';
+import safariAppIcon from './safari.png';
 import icalAppIcon from './ical.svg';
 import { AppIcon } from './components/AppIcon';
 import IMessageFactory from './data/iMessageItems';
@@ -196,6 +198,10 @@ export default function Home() {
     }
   }
 
+  const redirectTo = (url: string) => {
+    window.open(url, '_blank');
+  }
+
   const handleOnClick = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
     updateFadingItems(type)
   }
@@ -307,15 +313,24 @@ export default function Home() {
             p-4
           `}
         >
-
-          <AppIcon
-            src={messengerAppIcon}
-            alt="Messenger App Icon"
-          />
-          <AppIcon
-            src={messengerAppIcon}
-            alt="Messenger App Icon"
-          />
+          <div
+            className='select-none touch-none'
+          >
+            <AppIcon
+              src={spotifyAppIcon}
+              alt="Spotify App Icon"
+              handleOnMouseUp={() => redirectTo('https://open.spotify.com/playlist/37i9dQZF1DWYKDqD9TjlMc')}
+            />
+          </div>
+          <div
+            className='select-none touch-none'
+          >
+            <AppIcon
+              src={safariAppIcon}
+              alt="Safari App Icon"
+              handleOnMouseUp={() => redirectTo('https://bento.me/bencotte')}
+            />
+          </div>
         </div>
 
         <div
