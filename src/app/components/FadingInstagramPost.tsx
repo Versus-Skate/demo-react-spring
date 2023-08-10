@@ -5,6 +5,7 @@ import appleSpinner from "./apple-spinner.svg";
 
 export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id: number, imgUrl: string, placeholderUrl: string }) {
   const imgRef = useRef<HTMLImageElement>(null);
+  const placeholderRef = useRef<HTMLImageElement>(null);
 
   const itemApi = useSpringRef();
   const [spring] = useSpring(() => ({
@@ -26,7 +27,20 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
 
   useEffect(() => {
     imgRef.current!.onload = () => {
+      placeholderApi.start({
+        from: {
+          opacity: 1,
+        },
+        to: {
+          opacity: 0,
+        },
+        config: {
+          duration: 1000,
+        }
+      });
+    };
 
+    placeholderRef.current!.onload = () => {
       itemApi.start({
         from: {
           opacity: 0,
@@ -40,18 +54,6 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
         }],
         config: {
           duration: 100,
-        }
-      });
-      
-      placeholderApi.start({
-        from: {
-          opacity: 1,
-        },
-        to: {
-          opacity: 0,
-        },
-        config: {
-          duration: 1000,
         }
       });
     };
@@ -80,6 +82,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
       >
         <div className="absolute animate-pulse rounded-[10px] bg-black/20 w-full h-full"/>
         <Image
+          ref={placeholderRef}
           src={placeholderUrl}
           alt={'Ig post'}
           width={120}
