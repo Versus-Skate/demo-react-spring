@@ -23,22 +23,21 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
   const placeholderApi = useSpringRef();
   const [placeholderSpring] = useSpring(() => ({
     ref: placeholderApi,
-    from: {
-      opacity: 1,
-    },
-    to: {
-      opacity: 0,
-    },
-    config: {
-      duration: 500,
-    }
   }));
 
 
   useEffect(() => {
     imgRef.current!.onload = () => {
       placeholderApi.start({
-        opacity: 0,
+        from: {
+          opacity: 1,
+        },
+        to: {
+          opacity: 0,
+        },
+        config: {
+          duration: 500,
+        }
       });
     };
   }, []);
