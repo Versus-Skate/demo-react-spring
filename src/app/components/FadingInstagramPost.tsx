@@ -17,7 +17,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
       scale: 1,
     }],
     config: {
-      duration: 500,
+      duration: 100,
     }
   }));
   const placeholderApi = useSpringRef();
@@ -30,7 +30,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
       opacity: 0,
     },
     config: {
-      duration: 100,
+      duration: 500,
     }
   }));
 
