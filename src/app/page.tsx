@@ -17,7 +17,7 @@ import isMobile from 'is-mobile';
 
 import iPhoneSE from './iphone-se.png';
 import homescreen from './homescreen-@2x.jpg';
-import { animated, easings, useSpring, useTransition } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 
 // Should be an iPhone SE: 320 x 568
 
@@ -296,7 +296,7 @@ export default function Home() {
           layout='fill'
           objectFit='cover'
           className='absolute z-0'
-
+          placeholder='blur'
         />
 
         <div
