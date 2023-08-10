@@ -17,12 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-      <meta property="og:video:secure_url" content="/isak-phone-withtouch.mp4" />
-      <meta property="og:video" content="/isak-phone-withtouch.mp4" />
+      <meta property="og:video:secure_url" content="/isak-phone-withtouch-1080.mp4" />
+      <meta property="og:video" content="/isak-phone-withtouch-1080.mp4" />
       <meta property="og:video:type" content="video/mp4" />
       <meta property="og:title" content="Isak's iPhone" />
       <meta property="og:description" content='You have one unread message from Magnus' />
-      <meta property="og:video:width" content="300" />
+      <meta property="og:video:width" content="400" />
       <meta property="og:video:height" content="400" />
 
       <meta property="og:type" content="website" />
@@ -36,9 +36,9 @@ export default function RootLayout({
       <meta name="twitter:title" content="Isak's iPhone" />
       <meta property="twitter:site" content="@ben_cotte" />
       <meta name="twitter:description" content="You have one unread message from Magnus" />
-      <meta name="twitter:player" content="https://demo-react-spring.vercel.app/isak-phone-withtouch.mp4" />
+      <meta name="twitter:player" content="https://demo-react-spring.vercel.app/isak-phone-withtouch-1080.mp4" />
       <meta name="twitter:player:width" content="1200" />
-      <meta name="twitter:player:height" content="1600" />
+      <meta name="twitter:player:height" content="1200" />
       <meta name="twitter:image" content="https://demo-react-spring.vercel.app/og.jpg" />
       <meta name="twitter:image:alt" content="SKAM is a story about Oslo teens as they navigate friendships, relationships, and identity." />
 
