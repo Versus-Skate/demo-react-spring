@@ -20,6 +20,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
       duration: 100,
     }
   }));
+
   const placeholderApi = useSpringRef();
   const [placeholderSpring] = useSpring(() => ({
     ref: placeholderApi,
@@ -57,6 +58,8 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
         className="absolute rounded-[10px] bg-black/20"
         style={{
           ...placeholderSpring,
+          width: 120,
+          height: 120,
         }}
       >
         <Image

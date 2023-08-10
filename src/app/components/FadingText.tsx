@@ -60,12 +60,11 @@ export default function FadingText({ author, type, text }: { author: any, type: 
   return (
     <animated.div
       className={`
-        ${getBg(type)}
-        px-4 py-2 rounded-[20px]
+      flex
       `}
       style={spring}
     >
-      <div className='absolute flex flex-col -left-10 top-1'>
+      <div className='flex flex-col mr-1 items-center mt-1'>
         <Image
           src={getAvatar(author.name)!}
           alt={`${author.name} avatar`}
@@ -75,14 +74,18 @@ export default function FadingText({ author, type, text }: { author: any, type: 
           layout='fixed'
           placeholder='blur'
         />
-        <span className='text-center text-xs text-white/60'>{author.name}</span>
+        <div className='text-center text-xs text-white/60'>{author.name}</div>
       </div>
-      <div
-        className={`
+      <div>
+        <div
+          className={`
+          ${getBg(type)}
+        px-4 py-2 rounded-[20px]
           ${getTextColor(type)}
         `}
-      >
-        {text}
+        >
+          {text}
+        </div>
       </div>
     </animated.div>
   );
