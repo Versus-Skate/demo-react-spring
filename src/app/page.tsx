@@ -301,6 +301,25 @@ export default function Home() {
 
         <div
           className={`
+            flex-grow 
+            flex
+            gap-3
+            p-4
+          `}
+        >
+
+          <AppIcon
+            src={messengerAppIcon}
+            alt="Messenger App Icon"
+          />
+          <AppIcon
+            src={messengerAppIcon}
+            alt="Messenger App Icon"
+          />
+        </div>
+
+        <div
+          className={`
             flex items-center justify-evenly 
             relative
             w-full h-[94px] 
