@@ -21,8 +21,6 @@ import { animated, useSpring } from '@react-spring/web';
 
 // Should be an iPhone SE: 320 x 568
 
-const getRandomSeconds = (minimumDelay: number) => Math.floor(Math.random() * minimumDelay) + minimumDelay;
-
 export default function Home() {
   const [_isMobile, set_IsMobile] = useState<boolean>(true);
   const [windowWidth, setWindowWidth] = useState<number>(320);
@@ -98,6 +96,42 @@ export default function Home() {
   }, [_isMobile]);
 
   useLayoutEffect(() => {
+
+    const addItemAt = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
+      let counter = {
+        messenger: 0,
+        imessage: 0,
+        instagram: 0,
+        ical: 0,
+      };
+      let startTimestamp: number | null = null;
+      let hasStarted = false;
+      let animationId: number | null = null;
+
+      const animate = (timestamp: number) => {
+        if (!startTimestamp) {
+          startTimestamp = timestamp;
+        }
+
+        const nextAnimationAt = _getDelay(counter[type], type);
+        console.log(nextAnimationAt);
+
+        const progress = timestamp - startTimestamp;
+        if (progress > nextAnimationAt) {
+          startTimestamp = timestamp;
+          updateItemList(type);
+          counter[type] += 1;
+          animationId = requestAnimationFrame(animate);
+        } else {
+          animationId = requestAnimationFrame(animate);
+        }
+      };
+
+      animationId = requestAnimationFrame(animate);
+
+      return () => cancelAnimationFrame(animationId!);
+    }
+
     addItemAt('imessage');
     addItemAt('messenger');
     addItemAt('instagram');
@@ -163,37 +197,6 @@ export default function Home() {
           setICalFadingItems(items => [...items, <FadingElement type='ical' key={type + items.length} item={fadingItem} />]);
         }
     }
-  }
-
-  const addItemAt = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
-    let startTimestamp: number | null = null;
-    let hasStarted = false;
-    let animationId: number | null = null;
-
-    const animate = (timestamp: number) => {
-      if (!startTimestamp) {
-        startTimestamp = timestamp;
-        hasStarted = false;
-      }
-
-      const progress = timestamp - startTimestamp;
-      if (!hasStarted && progress > getRandomSeconds(1000)) {
-        hasStarted = true;
-        startTimestamp = timestamp;
-        updateItemList(type);
-        animationId = requestAnimationFrame(animate);
-      } else if (hasStarted && progress > getRandomSeconds(300000)) {
-        startTimestamp = timestamp;
-        updateItemList(type);
-        animationId = requestAnimationFrame(animate);
-      } else {
-        animationId = requestAnimationFrame(animate);
-      }
-    };
-
-    animationId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationId!);
   }
 
   const handleOnClick = (type: 'messenger' | 'imessage' | 'instagram' | 'ical') => {
@@ -363,4 +366,25 @@ export default function Home() {
       </animated.div>
     </main>
   )
+}
+
+const _getRandomSeconds = (range: number, minimumDelay: number) => Math.random() * range + minimumDelay;
+
+const _getDelay = (totalItems: number, type: any) => {
+  if (totalItems === 0) {
+    if (type === 'imessage') {
+      return _getRandomSeconds(1000, 1000);
+    }
+    if (type === 'messenger') {
+      return _getRandomSeconds(1000, 2000);
+    }
+    if (type === 'instagram') {
+      return _getRandomSeconds(1000, 3000);
+    }
+    if (type === 'ical') {
+      return _getRandomSeconds(1000, 4000);
+    }
+  }
+  const delay = _getRandomSeconds(10000, totalItems * 1000);
+  return delay;
 }
