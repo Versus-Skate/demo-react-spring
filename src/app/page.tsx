@@ -382,6 +382,6 @@ const _getDelay = (totalItems: number, type: any) => {
       return _getRandomSeconds(1000, 4000);
     }
   }
-  const delay = _getRandomSeconds(totalItems * 1000, 2000);
+  const delay = _getRandomSeconds(totalItems * 10000, 2000);
   return delay;
 }
