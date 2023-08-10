@@ -1,4 +1,5 @@
 import { animated, useSpring } from "@react-spring/web";
+import { useState } from "react";
 
 function formatUnixTimestamp(timestamp: number): string {
   const dtObject = new Date(timestamp * 1000);
@@ -13,7 +14,11 @@ function formatUnixTimestamp(timestamp: number): string {
   return formattedDate;
 }
 
+const COLORS: ('blue' | 'green' | 'brown')[] = ['blue', 'green', 'brown'];
+
 export default function FadingCalDay({ datetime, text }: { datetime: any, text: string }) {
+  const [color, setColor] = useState<'blue' | 'green' | 'brown'>(COLORS[Math.floor(Math.random() * 3)]);
+
   const [spring, api] = useSpring(() => ({
     from: {
       opacity: 0,
@@ -46,16 +51,61 @@ export default function FadingCalDay({ datetime, text }: { datetime: any, text: 
       ...spring,
       right: computeRight(),
     }}>
-      <div className="border-l-4 border-[#F3B855] pl-2">
-      <div
-        className={`text-[#72531D] whitespace-nowrap`}
+      <div className={`flex`}
       >
-        {text}
-      </div>
-      <div className="text-[#B79E70] whitespace-nowrap text-xs">
-        {formatUnixTimestamp(datetime)}
-      </div>
+        <div className="w-1 rounded-full bg-blue-500 mr-2" />
+        <div>
+          <div
+            className={`whitespace-nowrap`}
+            style={{
+              color: getTitleColor(color),
+            }}
+          >
+            {text}
+          </div>
+          <div className="whitespace-nowrap text-xs"
+            style={{
+              color: getSubtitleColor(color),
+            }}
+
+          >
+            {formatUnixTimestamp(datetime)}
+          </div>
+        </div>
       </div>
     </animated.div>
   );
+}
+
+const getBorderColor = (color: 'blue' | 'green' | 'brown') => {
+  switch (color) {
+    case 'blue':
+      return '#0084ff';
+    case 'green':
+      return '#89B96B';
+    case 'brown':
+      return '#F3B855';
+  }
+}
+
+const getTitleColor = (color: 'blue' | 'green' | 'brown') => {
+  switch (color) {
+    case 'blue':
+      return '#0084ff';
+    case 'green':
+      return '#2C6A1B';
+    case 'brown':
+      return '#72531D';
+  }
+}
+
+const getSubtitleColor = (color: 'blue' | 'green' | 'brown') => {
+  switch (color) {
+    case 'blue':
+      return '#0084ff';
+    case 'green':
+      return '#89B96B';
+    case 'brown':
+      return '#B79E70';
+  }
 }
