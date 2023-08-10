@@ -15,8 +15,8 @@ export default function FadingElement({ type, item }: { type: 'messenger' | 'ime
     },
     to: [{
       textSize: 12,
-      top: -812 + 60 + 16,
-      opacity: 0,
+      // top: -812 + 60 + 16,
+      // opacity: 0,
     }],
     config: {
       easing: easings.easeInCirc,

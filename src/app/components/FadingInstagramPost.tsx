@@ -1,6 +1,7 @@
 import { animated, useSpring, useSpringRef } from "@react-spring/web";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import appleSpinner from "./apple-spinner.svg";
 
 export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id: number, imgUrl: string, placeholderUrl: string }) {
   const imgRef = useRef<HTMLImageElement>(null);
@@ -24,6 +25,9 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
   const placeholderApi = useSpringRef();
   const [placeholderSpring] = useSpring(() => ({
     ref: placeholderApi,
+    from: {
+      opacity: 1,
+    },
   }));
 
 
@@ -37,7 +41,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
           opacity: 0,
         },
         config: {
-          duration: 500,
+          duration: 1000,
         }
       });
     };
@@ -55,13 +59,14 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
       }}
     >
       <animated.div
-        className="absolute rounded-[10px] bg-black/20"
+        className="absolute rounded-[10px]"
         style={{
-          ...placeholderSpring,
+          opacity: placeholderSpring.opacity,
           width: 120,
           height: 120,
         }}
       >
+        <div className="absolute animate-pulse rounded-[10px] bg-black/20 w-full h-full"/>
         <Image
           src={placeholderUrl}
           alt={'Ig post'}
