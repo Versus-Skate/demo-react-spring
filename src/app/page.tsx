@@ -104,22 +104,19 @@ export default function Home() {
         instagram: 0,
         ical: 0,
       };
-      let startTimestamp: number | null = null;
-      let hasStarted = false;
+      let prevTimestamp: number | null = null;
+      let nextAnimationIn = _getDelay(counter[type], type);
       let animationId: number | null = null;
 
       const animate = (timestamp: number) => {
-        if (!startTimestamp) {
-          startTimestamp = timestamp;
+        if (!prevTimestamp) {
+          prevTimestamp = timestamp;
         }
 
-        const nextAnimationAt = _getDelay(counter[type], type);
-        console.log(nextAnimationAt);
-
-        const progress = timestamp - startTimestamp;
-        if (progress > nextAnimationAt) {
-          startTimestamp = timestamp;
+        const progress = timestamp - prevTimestamp; // gives normalized progress
+        if (progress > nextAnimationIn) {
           updateItemList(type);
+          nextAnimationIn = _getDelay(counter[type], type);
           counter[type] += 1;
           animationId = requestAnimationFrame(animate);
         } else {
@@ -385,6 +382,6 @@ const _getDelay = (totalItems: number, type: any) => {
       return _getRandomSeconds(1000, 4000);
     }
   }
-  const delay = _getRandomSeconds(10000, totalItems * 1000);
+  const delay = _getRandomSeconds(totalItems * 1000, 2000);
   return delay;
 }
