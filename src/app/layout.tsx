@@ -39,7 +39,7 @@ export default function RootLayout({
       <meta name="twitter:player" content="https://demo-react-spring.vercel.app/isak-phone-withtouch.mp4" />
       <meta name="twitter:player:width" content="1200" />
       <meta name="twitter:player:height" content="1600" />
-      <meta name="twitter:image" content="https://skamwithfriends.com/og.jpg" />
+      <meta name="twitter:image" content="https://demo-react-spring.vercel.app/og.jpg" />
       <meta name="twitter:image:alt" content="SKAM is a story about Oslo teens as they navigate friendships, relationships, and identity." />
 
       <body className={`${inter.className}`}>{children}</body>
