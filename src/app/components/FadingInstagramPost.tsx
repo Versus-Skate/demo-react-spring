@@ -6,19 +6,12 @@ import appleSpinner from "./apple-spinner.svg";
 export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id: number, imgUrl: string, placeholderUrl: string }) {
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const [spring, api] = useSpring(() => ({
+  const itemApi = useSpringRef();
+  const [spring] = useSpring(() => ({
+    ref: itemApi,
     from: {
       opacity: 0,
       scale: 0,
-    },
-    to: [{
-      opacity: 1,
-      scale: 1.02,
-    }, {
-      scale: 1,
-    }],
-    config: {
-      duration: 100,
     }
   }));
 
@@ -33,6 +26,23 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
 
   useEffect(() => {
     imgRef.current!.onload = () => {
+
+      itemApi.start({
+        from: {
+          opacity: 0,
+          scale: 0,
+        },
+        to: [{
+          opacity: 1,
+          scale: 1.02,
+        }, {
+          scale: 1,
+        }],
+        config: {
+          duration: 100,
+        }
+      });
+      
       placeholderApi.start({
         from: {
           opacity: 1,
@@ -45,6 +55,8 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
         }
       });
     };
+
+
   }, []);
 
   return (
