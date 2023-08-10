@@ -54,7 +54,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
       }}
     >
       <animated.div
-        className="absolute rounded-[10px]"
+        className="absolute rounded-[10px] bg-black/20"
         style={{
           ...placeholderSpring,
         }}
