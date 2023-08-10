@@ -7,13 +7,17 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
   const imgRef = useRef<HTMLImageElement>(null);
   const placeholderRef = useRef<HTMLImageElement>(null);
 
-  const itemApi = useSpringRef();
-  const [spring] = useSpring(() => ({
-    ref: itemApi,
+  const [itemSpring] = useSpring(() => ({
     from: {
       opacity: 0,
       scale: 0,
-    }
+    },
+    to: [{
+      opacity: 1,
+      scale: 1.02,
+    }, {
+      scale: 1,
+    }],
   }));
 
   const placeholderApi = useSpringRef();
@@ -21,6 +25,14 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
     ref: placeholderApi,
     from: {
       opacity: 1,
+    },
+  }));
+
+  const imageApi = useSpringRef();
+  const [imageSpring] = useSpring(() => ({
+    ref: imageApi,
+    from: {
+      opacity: 0,
     },
   }));
 
@@ -38,26 +50,18 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
           duration: 1000,
         }
       });
-    };
-
-    placeholderRef.current!.onload = () => {
-      itemApi.start({
+      imageApi.start({
         from: {
           opacity: 0,
-          scale: 0,
         },
-        to: [{
+        to: {
           opacity: 1,
-          scale: 1.02,
-        }, {
-          scale: 1,
-        }],
+        },
         config: {
-          duration: 100,
+          duration: 1000,
         }
       });
     };
-
 
   }, []);
 
@@ -69,7 +73,7 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
         `
       }
       style={{
-        ...spring,
+        ...itemSpring,
       }}
     >
       <animated.div
@@ -80,7 +84,6 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
           height: 120,
         }}
       >
-        <div className="absolute animate-pulse rounded-[10px] bg-black/20 w-full h-full"/>
         <Image
           ref={placeholderRef}
           src={placeholderUrl}
@@ -91,15 +94,23 @@ export default function FadingInstagramPost({ id, imgUrl, placeholderUrl }: { id
           className="rounded-[10px]"
         />
       </animated.div>
-      <Image
-        ref={imgRef}
-        src={imgUrl}
-        alt={'Ig post'}
-        width={120}
-        height={120}
-        objectFit="cover"
-        className="rounded-[10px]"
-      />
+      <animated.div
+        style={{
+          opacity: imageSpring.opacity,
+          width: 120,
+          height: 120,
+        }}
+      >
+        <Image
+          ref={imgRef}
+          src={imgUrl}
+          alt={'Ig post'}
+          width={120}
+          height={120}
+          objectFit="cover"
+          className="rounded-[10px]"
+        />
+      </animated.div>
     </animated.div>
   );
 }
