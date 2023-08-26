@@ -31,14 +31,28 @@ export default function AvatarsPoppin() {
     },
   }));
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      apiStart(api, [0, 1, 2, 3, 4, 5, 6, 7]);
-    }, 1000);
+  useLayoutEffect(() => {
+    let prevTimestamp: number | null = null;
+    let animationId: number | null = null;
+  
+    const animate = (timestamp: number) => {
+      if (!prevTimestamp) {
+        prevTimestamp = timestamp;
+      }
 
-    return () => {
-      clearInterval(intervalId);
-    }
+      const progress = timestamp - prevTimestamp;
+
+      if (progress > 2000) {
+        prevTimestamp = timestamp;
+        apiStart(api, [0, 1, 2, 3, 4, 5, 6, 7])
+      }
+
+      animationId = requestAnimationFrame(animate);
+    };
+  
+    animationId = requestAnimationFrame(animate);
+  
+    return () => cancelAnimationFrame(animationId!);
   }, []);
 
   const handleOnClick = () => {
