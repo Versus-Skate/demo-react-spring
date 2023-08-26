@@ -22,8 +22,12 @@ const AVATARS = [
 
 
 export default function AvatarsPoppin() {
+  const startsAfter = computeStartAfters();
+  const loopDurations = computeLoopDuration();
   
-  const [springs, api] = useSprings(AVATARS.length * 2, (index) => ({
+  const api = useSpringRef();
+  const [springs] = useSprings(AVATARS.length * 2, (index) => ({
+    ref: api,
     from: from(),
     to: to(index),
     config: {
@@ -32,19 +36,33 @@ export default function AvatarsPoppin() {
   }));
 
   useLayoutEffect(() => {
+    animateAtIndex(0, api, startsAfter, loopDurations);
+    animateAtIndex(1, api, startsAfter, loopDurations);
+    animateAtIndex(2, api, startsAfter, loopDurations);
+    animateAtIndex(3, api, startsAfter, loopDurations);
+  }, []);
+
+  const animateAtIndex = (coupleIndex: number, api: any, startsAfter: any, loopDurations: any) => {
     let prevTimestamp: number | null = null;
     let animationId: number | null = null;
+    let hasStarted = false;
+    const springIndexes = [coupleIndex * 2, coupleIndex * 2 + 1];
   
     const animate = (timestamp: number) => {
       if (!prevTimestamp) {
         prevTimestamp = timestamp;
+        hasStarted = false;
       }
 
       const progress = timestamp - prevTimestamp;
 
-      if (progress > 2000) {
+      if (!hasStarted && progress > startsAfter[coupleIndex]) {
+        hasStarted = true;
         prevTimestamp = timestamp;
-        apiStart(api, [0, 1, 2, 3, 4, 5, 6, 7])
+        apiStart(api, springIndexes);
+      } else if (hasStarted && progress > loopDurations[coupleIndex]) {
+        prevTimestamp = timestamp;
+        apiStart(api, springIndexes);
       }
 
       animationId = requestAnimationFrame(animate);
@@ -53,7 +71,7 @@ export default function AvatarsPoppin() {
     animationId = requestAnimationFrame(animate);
   
     return () => cancelAnimationFrame(animationId!);
-  }, []);
+  };
 
   const handleOnClick = () => {
     apiStart(api, [1, 3, 5, 7]);
@@ -185,4 +203,13 @@ const apiStart = (api: any, indexes: number[]) => {
       },
     }
   });
+}
+
+const computeStartAfters = () => {
+  return AVATARS.map((_, index) => Math.random() * 1000 + (index + 1) * 1000);
+}
+
+const computeLoopDuration = () => {
+  const minDuration = 4000;
+  return [Math.random() * 2000 + minDuration, Math.random() * 2000 + minDuration, Math.random() * 2000 + minDuration, Math.random() * 2000 + minDuration];
 }
