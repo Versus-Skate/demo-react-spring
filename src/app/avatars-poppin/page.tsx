@@ -6,6 +6,7 @@ import bubblePerson1 from './bubble-person-1.jpg';
 import bubblePerson2 from './bubble-person-2.jpg';
 import bubblePerson3 from './bubble-person-3.jpg';
 import bubblePerson4 from './bubble-person-4.jpg';
+import { useEffect, useLayoutEffect } from 'react';
 
 const AVATARS = [
   {
@@ -30,10 +31,19 @@ export default function AvatarsPoppin() {
     },
   }));
 
-  const handleOnClick = () => {
-    apiStart(api, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
-  }
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      apiStart(api, [0, 1, 2, 3, 4, 5, 6, 7]);
+    }, 1000);
 
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, []);
+
+  const handleOnClick = () => {
+    apiStart(api, [1, 3, 5, 7]);
+  }
 
   return (
     <main className='flex items-center gap-4 h-screen w-full justify-center'>
@@ -123,7 +133,7 @@ const Avatar = ({ index, spring }: { index: number, spring: any }) => {
  * Animation utils
  */
 
-const isBubble = (index: number) => index % 2 === 0;
+const isAvatar = (index: number) => index % 2 === 0;
 
 const from = () => ({
   textY: 0,
@@ -131,7 +141,7 @@ const from = () => ({
   avatarY: 0,
 });
 
-const to = (index: number) => isBubble(index) ?
+const to = (index: number) => isAvatar(index) ?
   [{
     avatarY: -8,
   }, {
@@ -148,7 +158,7 @@ const to = (index: number) => isBubble(index) ?
     textOpacity: 0,
   }]
 
-const duration = (index: number) => isBubble(index) ? 100 : 2000;
+const duration = (index: number) => isAvatar(index) ? 100 : 2000;
 
 const apiStart = (api: any, indexes: number[]) => {
   api.start((i: number) => {
